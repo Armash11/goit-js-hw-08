@@ -9,7 +9,7 @@ const email = document.querySelector('input[name="email"]');
 form.addEventListener('submit', onSubmitForm);
 form.addEventListener('input', throttle(onTextareaInput, 500));
 
-const formData = {
+let formData = {
   email: '',
   message: '',
 };
@@ -21,10 +21,12 @@ function onSubmitForm(evt) {
   if (email.value === '' || message.value === '') {
     return alert('Заповніть всі поля!');
   }
-  JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) ?? {};
+  console.log(formData);
+
+  // JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
   evt.currentTarget.reset(); // метод очистки форми(сбрасує всі поля в початкове значення)
   localStorage.removeItem(LOCAL_STORAGE_KEY); // очистка локалсториджа
-  console.log(formData);
+  formData = {};
 }
 
 function onTextareaInput(evt) {
@@ -34,7 +36,6 @@ function onTextareaInput(evt) {
 
 function populateTextarea() {
   const savedMessage = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
-  console.log(savedMessage);
   if (savedMessage === null) {
     return;
   }
